@@ -19,6 +19,7 @@ class Field{
         void showElements();
         void showMultGroup();
         int power(int,int);
+        int gornerPow(int,int);
 
     private:
         int gen, polynom, deg, elem_number, mult_elem_number;

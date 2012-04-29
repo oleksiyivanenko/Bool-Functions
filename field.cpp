@@ -120,3 +120,25 @@ int Field::power(int a, int pwr){
     }
     return elem;
 }
+
+// Gorner algorithm for rising to power
+int Field::gornerPow(int a, int pwr){
+    int product;
+    int term = a;
+    pwr %= mult_elem_number;
+    if(pwr & 1 == 1){
+        product = a;
+    }
+    else{
+        product = 1;
+    }
+    pwr >>= 1;
+    while(pwr != 0){
+        term = mul(term,term);
+        if(pwr & 1 == 1){
+            product = mul(product,term);
+        }
+        pwr >>= 1;
+    }
+    return product;
+}
