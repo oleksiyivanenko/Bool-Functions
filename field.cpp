@@ -1,22 +1,20 @@
 #include "field.h"
 Field::Field(){
-    generator = 16;
+    gen= 0b1000000000000011;
 }
 
 Field::Field(int g){
-    generator = g;
+    gen = g;
 }
 
-void Field::showBin(){
-    int x = generator;
-    int y = 0;
-    while(x!=0){
-        y = x & 1;
-        x = x >> 1;
-        cout<<y;
-    }
-    
-    //    cout<<x<<"\n";
-    //}
-    cout<<"generator = "<<generator<<"\n";
+void Field::showBin(int shown){
+    cout<< bitset < 16 >(shown)<<"\n";
+}
+
+void Field::showGen(){
+    showBin(gen);
+}
+
+int Field::sum(int a, int b){
+    return a ^ b;
 }

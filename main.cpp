@@ -1,8 +1,9 @@
 #include "main.h"
 
 int main(){
-    cout<<"Galois Field initialization\n";
+    cout<<"Galois Field\n";
     Field myField;
-    myField.showBin();
+    cout<<"Generator: ";
+    myField.showGen();
     return 0;
 }
