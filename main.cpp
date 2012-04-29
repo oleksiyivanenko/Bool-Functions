@@ -5,5 +5,6 @@ int main(){
     Field myField;
     cout<<"Generator: ";
     myField.showGen();
+    myField.genNBits(15);
     return 0;
 }

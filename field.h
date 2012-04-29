@@ -11,6 +11,8 @@ class Field{
         void showBin(int);
         void showGen();
         int sum(int,int);
+        int countDeg(int);
+        int genNBits(int);
     private:
         int gen;
 };

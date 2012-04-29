@@ -1,4 +1,3 @@
 #include <iostream>
-using namespace std;
-
 #include "field.h"
+using namespace std;
