@@ -1,3 +1,6 @@
+// field.h: Oleksiy Ivanenko
+// Description: Header file for Field class
+
 #ifndef __FIELD_H__
 #define __FIELD_H__
 #include <iostream>
@@ -15,7 +18,7 @@ class Field{
         int countDeg(int);
         int genNBits(int);
         int mul(int,int);
-        void countElements(int*);
+        void countElements();
         void showElements();
         void showMultGroup();
         int getElemNum();
@@ -26,7 +29,7 @@ class Field{
         int* getMultElem();
 
     private:
-        int gen, polynom, deg, elem_number, mult_elem_number;
+        int gen, deg, elem_number, mult_elem_number;
         int *elements, *multGroup;
 };
 

@@ -1,14 +1,15 @@
+// field.cpp: Oleksiy Ivanenko
+// Description: Methods which creates and works with Galois Fields
+
 #include "field.h"
 
 // Constructor in case you have another generator
 Field::Field(){
     gen = 0b1000000000000011;
     deg = countDeg(gen);
-    polynom = gen & genNBits(deg);
     elem_number = pow(2,deg);
     mult_elem_number = elem_number - 1;
-    elements = new int [elem_number];
-    countElements(elements);
+    countElements();
     multGroup = new int [mult_elem_number];
     for(int i = 0;i<mult_elem_number;i++){
         multGroup[i]=elements[i+1];
@@ -19,10 +20,10 @@ Field::Field(){
 // Destructor
 Field::~Field(){
     if(elements != NULL) {
-        delete [] elements;
+        delete[] elements;
     }
     if(multGroup != NULL) {
-        delete [] multGroup;
+        delete[] multGroup;
     }
 }
 
@@ -42,10 +43,10 @@ int Field::sum(int a, int b){
 }
 
 // Returns degree of polynom
-int Field::countDeg(int polinom){
+int Field::countDeg(int polynom){
     int k = 0;
-    while (polinom != 0){
-        polinom >>= 1;
+    while (polynom != 0){
+        polynom >>= 1;
         k++;
     }
     return k-1;
@@ -63,7 +64,8 @@ int Field::genNBits(int n){
 
 
 // Counts element of Field
-void Field::countElements(int *elements){
+void Field::countElements(){
+    elements = new int [elem_number];
     elements[0]=0;
     elements[1]=1;
     for(int i=2;i<elem_number;i++){
