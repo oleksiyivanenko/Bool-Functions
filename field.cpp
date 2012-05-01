@@ -1,8 +1,8 @@
 #include "field.h"
 
 // Constructor in case you have another generator
-Field::Field(int g){
-    gen = g;
+Field::Field(){
+    gen = 0b1000000000000011;
     deg = countDeg(gen);
     polynom = gen & genNBits(deg);
     elem_number = pow(2,deg);
@@ -28,7 +28,7 @@ Field::~Field(){
 
 // Show our int's in binary form
 void Field::showBin(int shown){
-    cout<< bitset < 16 >(shown)<<"\n";
+    cout<< bitset < 16 >(shown);
 }
 
 // Show generator polynom
@@ -123,6 +123,7 @@ int Field::power(int a, int pwr){
 
 // Gorner algorithm for rising to power
 int Field::gornerPow(int a, int pwr){
+    if(a == 0) return 0;
     int product;
     int term = a;
     pwr %= mult_elem_number;
@@ -141,4 +142,20 @@ int Field::gornerPow(int a, int pwr){
         pwr >>= 1;
     }
     return product;
+}
+
+int Field::getElemNum(){
+    return elem_number;
+}
+
+int Field::getMultElemNum(){
+    return mult_elem_number;
+}
+
+int* Field::getElem(){
+    return elements;
+}
+
+int* Field::getMultElem(){
+    return multGroup;
 }

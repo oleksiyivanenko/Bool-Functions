@@ -1,9 +1,7 @@
 #include "field.h"
+#include "function.h"
 
 int main(){
-    cout<<"Galois Field\n";
-    int gen = 0b1000000000000011;
-    Field myField(gen);
-    int x,y;
+    Function MyFuncs;
     return 0;
 }

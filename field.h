@@ -7,7 +7,7 @@ using namespace std;
 
 class Field{
     public:
-        Field(int);
+        Field();
         ~Field();
         void showBin(int);
         void showGen();
@@ -18,8 +18,12 @@ class Field{
         void countElements(int*);
         void showElements();
         void showMultGroup();
+        int getElemNum();
+        int getMultElemNum();
         int power(int,int);
         int gornerPow(int,int);
+        int* getElem();
+        int* getMultElem();
 
     private:
         int gen, polynom, deg, elem_number, mult_elem_number;
