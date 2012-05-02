@@ -12,9 +12,10 @@ public:
 	~Function();
 
 	void countFunction();
+	void disbalance();
 protected:
-	int N, M, el_number;
-	int *N_vals, *M_vals, *el;
+	int N, M, el_number, deg;
+	int *N_vals, *M_vals, *el, *disb_N, *disb_M;
 	Field FuncField;
 };
 #endif

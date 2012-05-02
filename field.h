@@ -27,6 +27,7 @@ class Field{
         int gornerPow(int,int);
         int* getElem();
         int* getMultElem();
+        int getDeg();
 
     private:
         int gen, deg, elem_number, mult_elem_number;

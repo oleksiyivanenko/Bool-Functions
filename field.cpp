@@ -14,7 +14,7 @@ Field::Field(){
     for(int i = 0;i<mult_elem_number;i++){
         multGroup[i]=elements[i+1];
     }
-
+    cout<<"Field created\n";
 }
 
 // Destructor
@@ -160,4 +160,8 @@ int* Field::getElem(){
 
 int* Field::getMultElem(){
     return multGroup;
+}
+
+int Field::getDeg(){
+    return deg;
 }

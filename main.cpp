@@ -6,6 +6,6 @@
 
 int main(){
     Function MyFuncs;
-    cout<<"Functions calculated\n";
+    cout<<"That's all Folks!\n";
     return 0;
 }
