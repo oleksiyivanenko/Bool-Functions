@@ -3,6 +3,7 @@
 
 #ifndef __FUNCTION_H__
 #define __FUNCTION_H__
+#include <fstream>
 #include "field.h"
 
 class Function{
@@ -13,7 +14,7 @@ public:
 	void countFunction();
 protected:
 	int N, M, el_number;
-	int *N_vals, *M_vals;
-	Field FuncField; 
+	int *N_vals, *M_vals, *el;
+	Field FuncField;
 };
 #endif
