@@ -8,26 +8,41 @@
 #include <math.h>
 using namespace std;
 
+#define GENERATOR 0b1000000000000011 // Generating polynom
+
 class Field{
     public:
+
+        // Constructors and destructor
         Field();
+        Field(int);
         ~Field();
+
+        // Basic functions
         void showBin(int);
-        void showGen();
-        int sum(int,int);
         int countDeg(int);
         int genNBits(int);
-        int mul(int,int);
+
+        // Count elements of field
         void countElements();
+        void countMultGroup();
+
+        // Show elements of field
         void showElements();
         void showMultGroup();
-        int getElemNum();
-        int getMultElemNum();
+
+        // Math operations in field
+        int sum(int,int);
+        int mul(int,int);
         int power(int,int);
         int gornerPow(int,int);
+
+        // Get functions
+        int getDeg();
+        int getElemNum();
+        int getMultElemNum();
         int* getElem();
         int* getMultElem();
-        int getDeg();
 
     private:
         int gen, deg, elem_number, mult_elem_number;

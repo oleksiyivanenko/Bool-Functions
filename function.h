@@ -4,18 +4,22 @@
 #ifndef __FUNCTION_H__
 #define __FUNCTION_H__
 #include <fstream>
+#include <string>
 #include "field.h"
 
 class Function{
 public:
 	Function();
+	Function(int);
 	~Function();
 
 	void countFunction();
 	void disbalance();
+	void walsh();
 protected:
-	int N, M, el_number, deg;
-	int *N_vals, *M_vals, *el, *disb_N, *disb_M;
+	int N, el_number, deg;
+	int *vals, *field_elements, *disbal;
+	int **walsh_coef;
 	Field FuncField;
 };
 #endif

@@ -5,7 +5,12 @@
 #include "function.h"
 
 int main(){
-    Function MyFuncs;
+	int N = (1<<10)+(1<<7)-1;
+	int M = (1<<7)+(1<<3)-1;
+	cout<<"\n*** Function N = "<<N<<" ***\n";
+    Function MyFuncOne(N);
+    cout<<"\n*** Function M = "<<M<<" ***\n";
+    Function MyFuncTwo(M);
     cout<<"That's all Folks!\n";
     return 0;
 }

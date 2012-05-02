@@ -3,17 +3,25 @@
 
 #include "field.h"
 
-// Constructor in case you have another generator
+// Default constructor
 Field::Field(){
-    gen = 0b1000000000000011;
+    gen = GENERATOR;
     deg = countDeg(gen);
     elem_number = pow(2,deg);
     mult_elem_number = elem_number - 1;
     countElements();
-    multGroup = new int [mult_elem_number];
-    for(int i = 0;i<mult_elem_number;i++){
-        multGroup[i]=elements[i+1];
-    }
+    countMultGroup();
+    cout<<"Field created\n";
+}
+
+// Constructor in case you have another generator
+Field::Field(int generator){
+    gen = generator;
+    deg = countDeg(gen);
+    elem_number = pow(2,deg);
+    mult_elem_number = elem_number - 1;
+    countElements();
+    countMultGroup();
     cout<<"Field created\n";
 }
 
@@ -30,16 +38,6 @@ Field::~Field(){
 // Show our int's in binary form
 void Field::showBin(int shown){
     cout<< bitset < 16 >(shown);
-}
-
-// Show generator polynom
-void Field::showGen(){
-    showBin(gen);
-}
-
-// Sum operation in our Field
-int Field::sum(int a, int b){
-    return a ^ b;
 }
 
 // Returns degree of polynom
@@ -62,8 +60,7 @@ int Field::genNBits(int n){
     return bits;
 }
 
-
-// Counts element of Field
+// Counts elements of Field
 void Field::countElements(){
     elements = new int [elem_number];
     elements[0]=0;
@@ -73,6 +70,14 @@ void Field::countElements(){
         if (countDeg(elements[i]) >= deg){
             elements[i] ^= gen;
         }
+    }
+}
+
+// Counts elements of Multiplication group
+void Field::countMultGroup(){
+    multGroup = new int [mult_elem_number];
+    for(int i = 0;i < mult_elem_number;i++){
+        multGroup[i]=elements[i+1];
     }
 }
 
@@ -88,6 +93,11 @@ void Field::showMultGroup(){
     for(int i = 0;i < mult_elem_number;i++){
         showBin(multGroup[i]);
     }
+}
+
+// Sum operation in our Field
+int Field::sum(int a, int b){
+    return a ^ b;
 }
 
 // Multiplication in Field
@@ -146,22 +156,26 @@ int Field::gornerPow(int a, int pwr){
     return product;
 }
 
+// Returns degree of generator polynom
+int Field::getDeg(){
+    return deg;
+}
+// Returns number of elements in field
 int Field::getElemNum(){
     return elem_number;
 }
 
+// Returns number of elements in multiplication group
 int Field::getMultElemNum(){
     return mult_elem_number;
 }
 
+// Returns pointer to array with field elements
 int* Field::getElem(){
     return elements;
 }
 
+// Returns pointer to array with multiplication group elements
 int* Field::getMultElem(){
     return multGroup;
-}
-
-int Field::getDeg(){
-    return deg;
 }

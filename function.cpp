@@ -4,75 +4,76 @@
 #include "function.h"
 
 Function::Function(){
-	N = (1<<10)+(1<<7)-1;
-	M = (1<<7)+(1<<3)-1;
+	N = 1151;
 	el_number = FuncField.getElemNum();
 	deg = FuncField.getDeg();
-	el = FuncField.getElem();
+	field_elements = FuncField.getElem();
+	countFunction();
+	disbalance();
+	walsh();
+}
+
+Function::Function(int funcDeg){
+	N = funcDeg;
+	el_number = FuncField.getElemNum();
+	deg = FuncField.getDeg();
+	field_elements = FuncField.getElem();
 	countFunction();
 	disbalance();
 	walsh();
 }
 
 Function::~Function(){
-        if(M_vals != NULL)
-        	delete[] M_vals;
-        if(N_vals != NULL)
-        	delete[] N_vals;
-        if(disb_N != NULL)
-        	delete[] disb_N;
-        if(disb_M != NULL)
-        	delete[] disb_M;
+        if(vals != NULL)
+        	delete[] vals;
+        if(disbal != NULL)
+        	delete[] disbal;
+        if(walsh_coef != NULL)
+        	for(int i = 0; i < el_number;i++)
+        		delete[] walsh_coef[i];
+        	delete[] walsh_coef;
 }
 
 void Function::countFunction(){
-	N_vals = new int[el_number];
-	M_vals = new int[el_number];
-	cout<<"\n*** Functions calculation ***\n";
-	ofstream N_func;
-	N_func.open("N_func.txt");
+	vals = new int[el_number];
+	cout<<"\n*** Function calculation ***\n";
 	for(int i = 0; i < el_number; i++){
-		N_vals[i] = FuncField.gornerPow(el[i],N);
-		N_func << el[i]<<"\t"<<N_vals[i]<<"\n";
+		vals[i] = FuncField.gornerPow(field_elements[i],N);
+		cout<<i<<"\t";
+		FuncField.showBin(field_elements[i]);
+		cout<<"\t";
+		FuncField.showBin(vals[i]);
+		cout<<"\n";
 	}
-	N_func.close();
-	ofstream M_func;
-	M_func.open("M_func.txt");
-	for(int i = 0; i < el_number; i++){
-		M_vals[i] = FuncField.gornerPow(el[i],M);
-		M_func << el[i]<<"\t"<<M_vals[i]<<"\n";
-	}
-	M_func.close();
-	cout<<"Tables of truth are calculated\n";
+	cout<<"Table of truth calculated\n";
 }
 
 void Function::disbalance(){
-	int x = 1 << (deg - 1);
-	disb_M = new int[deg];
-	disb_N = new int[deg];
+	int x = 1;
+	disbal = new int[deg];
 	cout<<"\n*** Disbalance ***\n";
 	for(int i = 0;i < deg;i++){
-		disb_N[i] = 0;
-		disb_M[i] = 0;
+		disbal[i] = 0;
 		for(int j = 0; j < el_number; j++){
-			if((x & N_vals[j]) == 0){
-				disb_N[i]++;
+			if((x & vals[j]) == 0){
+				disbal[i]++;
 			}
 			else{
-				disb_N[i]--;
-			}
-			if((x & M_vals[j]) == 0){;
-				disb_M[i]++;
-			}
-			else{
-				disb_M[i]--;
+				disbal[i]--;
 			}
 		}
-		x >>= 1;
-		cout<<"N disb "<<i<<" "<<disb_N[i]<<" M disb "<<i<<" "<<disb_M[i]<<"\n";
+		x <<= 1;
+		cout<<"Disbalance of "<<i<<" element is:"<<disbal[i]<<"\n";
 	}
 }
 
 void Function::walsh(){
-	
+	cout<<"\n*** Walsh ***\n";
+	walsh_coef = new int *[el_number];
+	for(int i = 0; i < el_number;i++){
+		walsh_coef[i] = new int[deg];
+	}
+	//for(int i = 0;i < el_number;i++){
+	//	if(vals[i])
+	//}
 }
