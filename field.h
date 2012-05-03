@@ -34,6 +34,8 @@ class Field{
         // Math operations in field
         int sum(int,int);
         int mul(int,int);
+        int mult(int,int);
+        int reduce(long);
         int power(int,int);
         int gornerPow(int,int);
 
