@@ -13,7 +13,7 @@ Function::Function(){
 	disbalance();
 	walsh();
 	errorCoef();
-	lavEffect();
+	avalancheEffect();
 }
 
 // Constructor which gets function degree
@@ -26,7 +26,7 @@ Function::Function(int funcDeg){
 	disbalance();
 	walsh();
 	errorCoef();
-	lavEffect();
+	avalancheEffect();
 }
 
 // Destructor
@@ -36,7 +36,7 @@ Function::~Function(){
         if(disbal != NULL)
         	delete[] disbal;
         if(walsh_coef != NULL)
-        	for(int i = 0; i < el_number;i++)
+        	for(int i = 0; i < deg;i++)
         		delete[] walsh_coef[i];
         	delete[] walsh_coef;
         if(err_coef != NULL)
@@ -81,10 +81,43 @@ void Function::disbalance(){
 // Counts Walsh coefficients
 void Function::walsh(){
 	cout<<"\n*** Walsh ***\n";
-	walsh_coef = new int *[el_number];
-	for(int i = 0; i < el_number;i++){
-		walsh_coef[i] = new int[deg];
+	walsh_coef = new int *[deg];
+	for(int i = 0; i < deg;i++){
+		walsh_coef[i] = new int[el_number];
 	}
+	int x = 1;
+	for(int i = 0; i < deg; i++){
+		for(int j = 0; j < el_number; j++){
+			// walsh_coef[i][j] = 1;
+			(vals[j] & x) != 0 ? walsh_coef[i][j] = -1 : walsh_coef[i][j] = 1;
+		}
+		x <<= 1;
+	}
+	x >>= 1; 
+	for(int i = 0;i < deg;i++){
+		for(int j = 0;j < el_number;j++){
+			int u0 = field_elements[j];
+			int u1 = u0 ^ x;
+			if((u1 & x) == 0){
+				int temp = u0;
+				u0 = u1;
+				u1 = temp;
+			}
+			// for(int k = 0;k < deg;k++){
+				int tmp = walsh_coef[i][u0];
+				walsh_coef[i][u0] = tmp + walsh_coef[i][u1];
+				walsh_coef[i][u1] = tmp - walsh_coef[i][u1];
+			// }
+		}
+		x >>= 1;
+	}
+	for(int i = 0; i < deg; i++){
+		for(int j = 0; j < el_number; j++){
+			cout<<walsh_coef[i][j]<<" ";
+		}
+		cout<<"\n";
+	}
+
 }
 
 // Counts error spread coefficients of functions
@@ -100,22 +133,14 @@ void Function::errorCoef(){
 			(vals[j] & x) != 0 ? tmp1 = 1 : tmp1 = 0;
 			(FuncField.gornerPow(temp,N) & x) != 0 ? tmp2 = 1 : tmp2 = 0;
 			err_coef[i] += (tmp1 ^ tmp2);
-			// for(int k = 0; k < el_number; k++){
-			// 	if(field_elements[k] == temp){
-			// 		int tmp1, tmp2;
-			// 		(vals[j] & x) != 0 ? tmp1 = 1 : tmp1 = 0;
-			// 		(vals[k] & x) != 0 ? tmp2 = 1 : tmp2 = 0;
-			// 		err_coef[i] += (tmp1 ^ tmp2);
-			// 	}
-			// }
 		}
 		cout<<"Error spread coefficient "<<i<<": "<<err_coef[i]<<"\n";
 		x <<= 1;
 	}
 }
 
-// Counts lav effect of functions
-void Function::lavEffect(){
+// Counts avalanche effect of functions
+void Function::avalancheEffect(){
 	cout<<"\n*** Lav Effect ***\n";
 	int k = 1 << (deg - 1);
 	int top = k + 350;
@@ -123,11 +148,11 @@ void Function::lavEffect(){
 	int x = 0;
 	for(int i = 0;i < deg; i++){
 		if(err_coef[i] >= bottom && err_coef[i] <= top){
-			cout<<"Function "<<i<<" have strict lav effect\n";
+			cout<<"Function "<<i<<" has strict avalanche effect\n";
 			x++;
 		}
 	}
 	if(x == deg){
-		cout<<"Function have strict lab effect zero poryadka\n";
+		cout<<"Function has strict zero-order avalanche effect\n";
 	}
 }

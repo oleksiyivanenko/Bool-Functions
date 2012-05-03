@@ -66,10 +66,11 @@ void Field::countElements(){
     elements[0]=0;
     elements[1]=1;
     for(int i=2;i<elem_number;i++){
-        elements[i]=elements[i-1]<<1;
-        if (countDeg(elements[i]) >= deg){
-            elements[i] ^= gen;
-        }
+        elements[i] = elements[i-1] + 1;
+        // elements[i]=elements[i-1]<<1;
+        // if (countDeg(elements[i]) >= deg){
+        //     elements[i] ^= gen;
+        // }
     }
 }
 
@@ -101,25 +102,6 @@ int Field::sum(int a, int b){
 }
 
 // Multiplication in Field
-int Field::mult(int a, int b){
-    int elem;
-    int x=0,y=0;
-    for(int i = 0; i < mult_elem_number; i++){
-        if(multGroup[i]==a){
-            x=i;
-            break;
-        }
-    }
-    for(int i = 0; i < mult_elem_number; i++){
-        if(multGroup[i]==b){
-            y=i;
-            break;
-        }
-    }
-    elem = multGroup[(x+y)%mult_elem_number];
-    return elem;
-}
-
 int Field::mul(int a, int b){
     long product = 0;
     int x = 1;
@@ -132,6 +114,7 @@ int Field::mul(int a, int b){
     return reduce(product);
 }
 
+// Reduce module deg
 int Field::reduce(long a){
     while(countDeg(a) >= deg){
         a ^= (gen << countDeg(a) - deg);

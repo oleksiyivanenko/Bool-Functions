@@ -3,8 +3,6 @@
 
 #ifndef __FUNCTION_H__
 #define __FUNCTION_H__
-#include <fstream>
-#include <string>
 #include "field.h"
 
 class Function{
@@ -17,7 +15,7 @@ public:
 	void disbalance();
 	void walsh();
 	void errorCoef();
-	void lavEffect();
+	void avalancheEffect();
 protected:
 	int N, el_number, deg;
 	int *vals, *field_elements, *disbal, *err_coef;
