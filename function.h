@@ -16,9 +16,10 @@ public:
 	void countFunction();
 	void disbalance();
 	void walsh();
+	void errorCoef();
 protected:
 	int N, el_number, deg;
-	int *vals, *field_elements, *disbal;
+	int *vals, *field_elements, *disbal, *err_coef;
 	int **walsh_coef;
 	Field FuncField;
 };

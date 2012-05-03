@@ -11,6 +11,7 @@ Function::Function(){
 	countFunction();
 	disbalance();
 	walsh();
+	errorCoef();
 }
 
 Function::Function(int funcDeg){
@@ -21,6 +22,7 @@ Function::Function(int funcDeg){
 	countFunction();
 	disbalance();
 	walsh();
+	errorCoef();
 }
 
 Function::~Function(){
@@ -32,6 +34,8 @@ Function::~Function(){
         	for(int i = 0; i < el_number;i++)
         		delete[] walsh_coef[i];
         	delete[] walsh_coef;
+        if(err_coef != NULL)
+        	delete[] err_coef;
 }
 
 void Function::countFunction(){
@@ -71,9 +75,28 @@ void Function::walsh(){
 	cout<<"\n*** Walsh ***\n";
 	walsh_coef = new int *[el_number];
 	for(int i = 0; i < el_number;i++){
-		walsh_coef[i] = new int[deg];
+		walsh_coef[i] = new int[2];
 	}
-	//for(int i = 0;i < el_number;i++){
-	//	if(vals[i])
-	//}
+}
+
+void Function::errorCoef(){
+	cout<<"\n*** Error spread coefficient ***\n";
+	int x = 1;
+	err_coef = new int[deg];
+	for(int i = 0;i < deg; i++){
+		err_coef[i] = 0;
+		for(int j = 0;j < el_number;j++){
+			int temp = field_elements[j]^x;
+			for(int k = 0; k < el_number; k++){
+				if(field_elements[k] == temp){
+					int tmp1, tmp2;
+					(vals[j] & x) != 0 ? tmp1 = 1 : tmp1 = 0;
+					(vals[k] & x) != 0 ? tmp2 = 1 : tmp2 = 0;
+					err_coef[i] += (tmp1 ^ tmp2);
+				}
+			}
+		}
+		cout<<"Error spread coefficient "<<i<<": "<<err_coef[i]<<"\n";
+		x <<= 1;
+	}
 }
