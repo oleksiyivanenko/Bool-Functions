@@ -11,6 +11,6 @@ int main(){
     Function MyFuncOne(N);
     cout<<"\n*** Function M = "<<M<<" ***\n";
     Function MyFuncTwo(M);
-    cout<<"That's all Folks!\n";
+    cout<<"\nThat's all Folks!\n";
     return 0;
 }

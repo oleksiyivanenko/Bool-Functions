@@ -3,6 +3,7 @@
 
 #include "function.h"
 
+// Default constructor
 Function::Function(){
 	N = 1151;
 	el_number = FuncField.getElemNum();
@@ -12,8 +13,10 @@ Function::Function(){
 	disbalance();
 	walsh();
 	errorCoef();
+	lavEffect();
 }
 
+// Constructor which gets function degree
 Function::Function(int funcDeg){
 	N = funcDeg;
 	el_number = FuncField.getElemNum();
@@ -23,8 +26,10 @@ Function::Function(int funcDeg){
 	disbalance();
 	walsh();
 	errorCoef();
+	lavEffect();
 }
 
+// Destructor
 Function::~Function(){
         if(vals != NULL)
         	delete[] vals;
@@ -38,6 +43,7 @@ Function::~Function(){
         	delete[] err_coef;
 }
 
+// Counts functions table of truth
 void Function::countFunction(){
 	vals = new int[el_number];
 	cout<<"\n*** Function calculation ***\n";
@@ -52,6 +58,7 @@ void Function::countFunction(){
 	cout<<"Table of truth calculated\n";
 }
 
+// Counts disbalance of function
 void Function::disbalance(){
 	int x = 1;
 	disbal = new int[deg];
@@ -71,6 +78,7 @@ void Function::disbalance(){
 	}
 }
 
+// Counts Walsh coefficients
 void Function::walsh(){
 	cout<<"\n*** Walsh ***\n";
 	walsh_coef = new int *[el_number];
@@ -79,6 +87,7 @@ void Function::walsh(){
 	}
 }
 
+// Counts error spread coefficients of functions
 void Function::errorCoef(){
 	cout<<"\n*** Error spread coefficient ***\n";
 	int x = 1;
@@ -98,5 +107,23 @@ void Function::errorCoef(){
 		}
 		cout<<"Error spread coefficient "<<i<<": "<<err_coef[i]<<"\n";
 		x <<= 1;
+	}
+}
+
+// Counts lav effect of functions
+void Function::lavEffect(){
+	cout<<"\n*** Lav Effect ***\n";
+	int k = 1 << (deg - 1);
+	int top = k + 350;
+	int bottom = k - 350;
+	int x = 0;
+	for(int i = 0;i < deg; i++){
+		if(err_coef[i] >= bottom && err_coef[i] <= top){
+			cout<<"Function "<<i<<" have strict lav effect\n";
+			x++;
+		}
+	}
+	if(x == deg){
+		cout<<"Function have strict lab effect zero poryadka\n";
 	}
 }

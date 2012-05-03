@@ -17,6 +17,7 @@ public:
 	void disbalance();
 	void walsh();
 	void errorCoef();
+	void lavEffect();
 protected:
 	int N, el_number, deg;
 	int *vals, *field_elements, *disbal, *err_coef;
