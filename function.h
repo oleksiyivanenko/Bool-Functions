@@ -4,6 +4,7 @@
 #ifndef __FUNCTION_H__
 #define __FUNCTION_H__
 #include "field.h"
+#include <stdlib.h>
 
 class Function{
 public:
@@ -16,9 +17,12 @@ public:
 	void walsh();
 	void errorCoef();
 	void avalancheEffect();
+	void nonlinearity();
+	void immunity();
+	int weight(int);
 protected:
 	int N, el_number, deg;
-	int *vals, *field_elements, *disbal, *err_coef;
+	int *vals, *field_elements, *disbal, *err_coef, *non_lin, *imm;
 	int **walsh_coef;
 	Field FuncField;
 };

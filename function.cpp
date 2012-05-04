@@ -12,6 +12,8 @@ Function::Function(){
 	countFunction();
 	disbalance();
 	walsh();
+	nonlinearity();
+	immunity();
 	errorCoef();
 	avalancheEffect();
 }
@@ -25,6 +27,8 @@ Function::Function(int funcDeg){
 	countFunction();
 	disbalance();
 	walsh();
+	nonlinearity();
+	immunity();
 	errorCoef();
 	avalancheEffect();
 }
@@ -41,6 +45,10 @@ Function::~Function(){
         	delete[] walsh_coef;
         if(err_coef != NULL)
         	delete[] err_coef;
+        if(non_lin != NULL)
+        	delete[] non_lin;
+        if(imm != NULL)
+        	delete[] imm;
 }
 
 // Counts functions table of truth
@@ -73,6 +81,7 @@ void Function::disbalance(){
 				disbal[i]--;
 			}
 		}
+		disbal[i] = abs(disbal[i]);
 		x <<= 1;
 		cout<<"Disbalance of "<<i<<" element is:"<<disbal[i]<<"\n";
 	}
@@ -93,7 +102,7 @@ void Function::walsh(){
 		}
 		x <<= 1;
 	}
-	x >>= 1; 
+	x = 1; 
 	for(int i = 0;i < deg;i++){
 		for(int j = 0;j < el_number;j++){
 			int u0 = field_elements[j];
@@ -109,7 +118,7 @@ void Function::walsh(){
 				walsh_coef[i][u1] = tmp - walsh_coef[i][u1];
 			// }
 		}
-		x >>= 1;
+		x <<= 1;
 	}
 	for(int i = 0; i < deg; i++){
 		for(int j = 0; j < el_number; j++){
@@ -155,4 +164,63 @@ void Function::avalancheEffect(){
 	if(x == deg){
 		cout<<"Function has strict zero-order avalanche effect\n";
 	}
+}
+
+void Function::nonlinearity(){
+	cout<<"\n*** Nonlinearity ***\n";
+	non_lin = new int[deg];
+	for(int i = 0;i < deg; i++){
+		int max = 0;
+		for(int j = 0;j < el_number;j++){
+			if(abs(walsh_coef[i][j]) > max){
+				max = walsh_coef[i][j];
+			}
+		}
+		non_lin[i] = (1 << (deg - 1)) - max/2;
+		cout<<"Nonlinearity for "<<i<<" function is: "<<non_lin[i]<<"\n";
+	}
+}
+
+void Function::immunity(){
+	cout<<"\n*** Immunity ***\n";
+	imm = new int[deg];
+	int *wtf;
+	wtf = new int[el_number];
+	for(int i = 0;i < el_number; i++){
+		wtf[i] = weight(field_elements[i]);
+	}
+	bool flag = true;
+	for(int i = 0;i < deg;i++){
+		flag = true;
+		for(int k = 0; k <= deg; k++){
+			for(int j = 0;j < el_number;j++){
+				if(k == wtf[j]){
+					if(walsh_coef[i][j] != 0){
+						flag = false;
+						break;
+					}
+				}
+			}
+			if(!flag){
+				imm[i] = k-1;
+				break;
+			}
+		}
+		cout<<"Immunity of "<<i<<" function is "<<imm[i]<<" order\n";
+	}
+	
+
+
+	delete[] wtf;
+}
+
+int Function::weight(int a){
+	int wt = 0;
+	while(a != 0){
+		if((a & 1) != 0 ){
+			wt++;
+		}
+		a >>= 1;
+	}
+	return wt;
 }
