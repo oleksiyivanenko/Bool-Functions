@@ -12,6 +12,7 @@ public:
 	Function(int);
 	~Function();
 
+	void analyze();
 	void countFunction();
 	void disbalance();
 	void walsh();

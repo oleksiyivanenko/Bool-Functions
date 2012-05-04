@@ -9,8 +9,10 @@ int main(){
 	int M = (1<<7)+(1<<3)-1;
 	cout<<"\n*** Function N = "<<N<<" ***\n";
     Function MyFuncOne(N);
+    MyFuncOne.analyze();
     cout<<"\n*** Function M = "<<M<<" ***\n";
     Function MyFuncTwo(M);
+    MyFuncTwo.analyze();
     cout<<"\nThat's all Folks!\n";
     return 0;
 }

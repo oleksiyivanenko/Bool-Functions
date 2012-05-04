@@ -6,33 +6,11 @@
 // Default constructor
 Function::Function(){
 	N = 1151;
-	el_number = FuncField.getElemNum();
-	deg = FuncField.getDeg();
-	field_elements = FuncField.getElem();
-	countFunction();
-	disbalance();
-	walsh();
-	nonlinearity();
-	immunity();
-	algDegree();
-	errorCoef();
-	avalancheEffect();
 }
 
 // Constructor which gets function degree
 Function::Function(int funcDeg){
-	N = funcDeg;
-	el_number = FuncField.getElemNum();
-	deg = FuncField.getDeg();
-	field_elements = FuncField.getElem();
-	countFunction();
-	disbalance();
-	walsh();
-	nonlinearity();
-	immunity();
-	algDegree();
-	errorCoef();
-	avalancheEffect();
+	N = funcDeg;	
 }
 
 // Destructor
@@ -51,6 +29,20 @@ Function::~Function(){
         	delete[] non_lin;
         if(imm != NULL)
         	delete[] imm;
+}
+
+void Function::analyze(){
+	el_number = FuncField.getElemNum();
+	deg = FuncField.getDeg();
+	field_elements = FuncField.getElem();
+	countFunction();
+	disbalance();
+	walsh();
+	nonlinearity();
+	immunity();
+	algDegree();
+	errorCoef();
+	avalancheEffect();
 }
 
 // Counts functions table of truth
