@@ -14,6 +14,7 @@ Function::Function(){
 	walsh();
 	nonlinearity();
 	immunity();
+	algDegree();
 	errorCoef();
 	avalancheEffect();
 }
@@ -29,6 +30,7 @@ Function::Function(int funcDeg){
 	walsh();
 	nonlinearity();
 	immunity();
+	algDegree();
 	errorCoef();
 	avalancheEffect();
 }
@@ -208,9 +210,6 @@ void Function::immunity(){
 		}
 		cout<<"Immunity of "<<i<<" function is "<<imm[i]<<" order\n";
 	}
-	
-
-
 	delete[] wtf;
 }
 
@@ -223,4 +222,18 @@ int Function::weight(int a){
 		a >>= 1;
 	}
 	return wt;
+}
+
+void Function::algDegree(){
+	cout<<"\n*** Algebraic degree ***\n";
+	for(int i = 0;i < deg; i++){
+		int algDeg;
+		if(disbal[i] == 0){
+			algDeg = deg - imm[i] -1;
+		}
+		else{
+			algDeg = deg - imm[i];
+		}
+		cout<<"Algebraic degree of "<<i<<" function is "<<algDeg<<"\n";
+	}
 }

@@ -20,6 +20,7 @@ public:
 	void nonlinearity();
 	void immunity();
 	int weight(int);
+	void algDegree();
 protected:
 	int N, el_number, deg;
 	int *vals, *field_elements, *disbal, *err_coef, *non_lin, *imm;
