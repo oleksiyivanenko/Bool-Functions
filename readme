@@ -1,2 +1,11 @@
-Readme
-May be some time I will write Readme
+#Boolean Functions analysis (4-th Cryptography lab)
+This code counts next boolean functions conditions:
+*Disbalance
+*Correlation Immunity
+*Nonlinearity
+*Error spread coefficients
+*Avalanche effects
+*Algebraic degree
+
+Time of execution nearly 1 min 50 second
+I will be glad if it's will be usefull for someone

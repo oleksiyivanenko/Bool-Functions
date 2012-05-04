@@ -32833,21 +32833,25 @@ f(x)  Order
 14    0    
 
 *** Algebraic degree ***
-Algebraic degree of 0 function is 14
-Algebraic degree of 1 function is 14
-Algebraic degree of 2 function is 14
-Algebraic degree of 3 function is 14
-Algebraic degree of 4 function is 14
-Algebraic degree of 5 function is 14
-Algebraic degree of 6 function is 14
-Algebraic degree of 7 function is 14
-Algebraic degree of 8 function is 14
-Algebraic degree of 9 function is 14
-Algebraic degree of 10 function is 14
-Algebraic degree of 11 function is 14
-Algebraic degree of 12 function is 14
-Algebraic degree of 13 function is 14
-Algebraic degree of 14 function is 14
+---------------------------
+f(x)  Degree  Max coefficient 
+0     14      0111111101111111
+1     11      0111111100001111
+2     13      0111111100111111
+3     11      0111111100001111
+4     14      0111111101111111
+5     12      0111111100011111
+6     10      0111111100000111
+7     10      0111111100000111
+8     14      0111111101111111
+9     14      0111111101111111
+10    14      0111111101111111
+11    14      0111111101111111
+12    13      0111111100111111
+13    12      0111111100011111
+14    11      0111111100001111
+
+Algebraic degree of F(x) is 14
 
 *** Error spread coefficients ***
 Error spread coefficients for f(x)0
@@ -66260,21 +66264,25 @@ f(x)  Order
 14    0    
 
 *** Algebraic degree ***
-Algebraic degree of 0 function is 14
-Algebraic degree of 1 function is 14
-Algebraic degree of 2 function is 14
-Algebraic degree of 3 function is 14
-Algebraic degree of 4 function is 14
-Algebraic degree of 5 function is 14
-Algebraic degree of 6 function is 14
-Algebraic degree of 7 function is 14
-Algebraic degree of 8 function is 14
-Algebraic degree of 9 function is 14
-Algebraic degree of 10 function is 14
-Algebraic degree of 11 function is 14
-Algebraic degree of 12 function is 14
-Algebraic degree of 13 function is 14
-Algebraic degree of 14 function is 14
+---------------------------
+f(x)  Degree  Max coefficient 
+0     11      0111000011111111
+1     13      0111001111111111
+2     13      0111001111111111
+3     13      0111001111111111
+4     14      0111011111111111
+5     14      0111011111111111
+6     14      0111011111111111
+7     14      0111011111111111
+8     13      0111001111111111
+9     14      0111011111111111
+10    14      0111011111111111
+11    14      0111011111111111
+12    14      0111011111111111
+13    14      0111011111111111
+14    13      0111001111111111
+
+Algebraic degree of F(x) is 14
 
 *** Error spread coefficients ***
 Error spread coefficients for f(x)0

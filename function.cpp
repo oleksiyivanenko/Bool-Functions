@@ -6,11 +6,13 @@
 // Default constructor
 Function::Function(){
 	N = 1151;
+	analyze();
 }
 
 // Constructor which gets function degree
 Function::Function(int funcDeg){
-	N = funcDeg;	
+	N = funcDeg;
+	analyze();	
 }
 
 // Destructor
@@ -33,6 +35,8 @@ Function::~Function(){
         	delete[] non_lin;
         if(imm != NULL)
         	delete[] imm;
+        if(alg_degree != NULL)
+        	delete[] alg_degree;
 }
 
 // Alanyze function for all cryptography parameters
@@ -50,7 +54,7 @@ void Function::analyze(){
 	avalancheEffect();
 }
 
-// Counts functions table of truth
+// Counts functions Truth Table
 void Function::countFunction(){
 	vals = new int[el_number];
 	cout<<"\n*** Truth Table ***\n";
@@ -66,7 +70,7 @@ void Function::countFunction(){
 	}
 }
 
-// Counts disbalance of function
+// Counts disbalance of functions f(x)
 void Function::disbalance(){
 	int x = 1;
 	disbal = new int[deg];
@@ -122,14 +126,14 @@ void Function::walsh(){
 	// 	}
 	// 	cout<<"\n";
 	// }
-
 }
 
+// Insets in x vector bit i on pos position
 int Function::insertBit(int x,int pos,int i){
 	return ((x >> pos) << (pos+1)) | ((i & 1) << pos) | (x & ((1<<pos)-1));
 }
 
-// Counts error spread coefficients of functions
+// Counts error spread coefficients of functions f(x) for every bit
 void Function::errorCoef(){
 	cout<<"\n*** Error spread coefficients ***";
 	// Memory allocation
@@ -164,7 +168,7 @@ void Function::errorCoef(){
 	}
 }
 
-// Counts avalanche effect of functions
+// Counts avalanche effect of functions f(x) and F(x)
 void Function::avalancheEffect(){
 	cout<<"\n*** Avalanche Effect ***\n";
 	cout<<"---------------------------\n";
@@ -200,6 +204,7 @@ void Function::avalancheEffect(){
 	}
 }
 
+// Counts nonlinearity of functions f(x)
 void Function::nonlinearity(){
 	cout<<"\n*** Nonlinearity ***\n";
 	cout<<"----------------------\n";
@@ -217,6 +222,7 @@ void Function::nonlinearity(){
 	}
 }
 
+// Counts correlation immunity of functions f(x)
 void Function::immunity(){
 	cout<<"\n*** Correlation Immunity ***\n";
 	cout<<"--------------------\n";
@@ -251,7 +257,7 @@ void Function::immunity(){
 	delete[] wtf;
 }
 
-// Counts weight
+// Counts weight of a
 int Function::weight(int a){
 	int wt = 0;
 	while(a != 0){
@@ -263,16 +269,53 @@ int Function::weight(int a){
 	return wt;
 }
 
+// Counts algebraic degree of functions f(x) and F(x)
 void Function::algDegree(){
 	cout<<"\n*** Algebraic degree ***\n";
-	for(int i = 0;i < deg; i++){
-		int algDeg;
-		if(disbal[i] == 0){
-			algDeg = deg - imm[i] -1;
+	cout<<"---------------------------\n";
+	// Memory allocation
+	int *triangle;
+	triangle = new int[el_number];
+	int *coeffs;
+	coeffs = new int[el_number];
+	alg_degree = new int[deg];
+	int max = 0;
+
+	cout<<setw(6)<<"f(x)"<<setw(8)<<"Degree"<<setw(16)<<"Max coefficient"<<endl;
+	// For every coordinate function
+	int x = 1;
+	for(int i = 0;i < deg;i++){
+		// Copy f(x) column from truth table to triangle
+		for(int j = 0;j < el_number; j++){
+			((vals[j] & x) != 0) ? triangle[j]=1: triangle[j] = 0;
 		}
-		else{
-			algDeg = deg - imm[i];
+
+		// Counts Gigalkin coefficients
+		for(int j = 0;j < el_number;j++){
+			coeffs[j] = triangle[0];
+			for(int k = 0; k < (el_number - j);k++){
+				triangle[k] ^= triangle[k+1]; 
+			}
 		}
-		cout<<"Algebraic degree of "<<i<<" function is "<<algDeg<<"\n";
+
+		// Defines algebraic degree of f(x) functions
+		int index = el_number - 1;
+		for(int j = index;j >= 0;j--){
+			index--;
+			if(coeffs[j] != 0){
+				break;
+			}
+		}
+		alg_degree[i]=weight(index);
+		if(alg_degree[i] > max) max = alg_degree[i];
+
+		cout<<setw(6)<<i<<setw(8)<<alg_degree[i];
+		FuncField.showBin(index);
+		cout<<endl;
+		
+		x <<= 1;
 	}
+	cout<<"\nAlgebraic degree of F(x) is "<<max<<endl;
+	delete[] coeffs;
+	delete[] triangle;
 }
