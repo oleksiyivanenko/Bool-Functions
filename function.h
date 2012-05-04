@@ -26,8 +26,8 @@ public:
 	int insertBit(int,int,int);
 protected:
 	int N, el_number, deg;
-	int *vals, *field_elements, *disbal, *err_coef, *non_lin, *imm;
-	int **walsh_coef;
+	int *vals, *field_elements, *disbal, *non_lin, *imm;
+	int **walsh_coef, **err_coef;
 	Field FuncField;
 };
 #endif

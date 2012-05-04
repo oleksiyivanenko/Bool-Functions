@@ -18,6 +18,8 @@ class Field{
         Field(int);
         ~Field();
 
+        void run();
+
         // Basic functions
         void showBin(int);
         int countDeg(int);

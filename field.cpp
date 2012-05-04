@@ -6,23 +6,21 @@
 // Default constructor
 Field::Field(){
     gen = GENERATOR;
-    deg = countDeg(gen);
-    elem_number = pow(2,deg);
-    mult_elem_number = elem_number - 1;
-    countElements();
-    countMultGroup();
-    cout<<"Field created\n";
+    run();
 }
 
 // Constructor in case you have another generator
 Field::Field(int generator){
     gen = generator;
+    run();
+}
+
+void Field::run(){
     deg = countDeg(gen);
     elem_number = pow(2,deg);
     mult_elem_number = elem_number - 1;
     countElements();
     countMultGroup();
-    cout<<"Field created\n";
 }
 
 // Destructor
@@ -67,10 +65,6 @@ void Field::countElements(){
     elements[1]=1;
     for(int i=2;i<elem_number;i++){
         elements[i] = elements[i-1] + 1;
-        // elements[i]=elements[i-1]<<1;
-        // if (countDeg(elements[i]) >= deg){
-        //     elements[i] ^= gen;
-        // }
     }
 }
 
