@@ -91,28 +91,21 @@ void Function::walsh(){
 	int x = 1;
 	for(int i = 0; i < deg; i++){
 		for(int j = 0; j < el_number; j++){
-			// walsh_coef[i][j] = 1;
 			(vals[j] & x) != 0 ? walsh_coef[i][j] = -1 : walsh_coef[i][j] = 1;
 		}
 		x <<= 1;
-	}
-	x = 1; 
+	} 
 	for(int i = 0;i < deg;i++){
-		for(int j = 0;j < el_number;j++){
-			int u0 = field_elements[j];
-			int u1 = u0 ^ x;
-			if((u1 & x) == 0){
-				int temp = u0;
-				u0 = u1;
-				u1 = temp;
-			}
-			// for(int k = 0;k < deg;k++){
+		for(int j = 0;j < deg;j++){
+			for(int k = 0;k < el_number/2;k++){
+				int u0 = insertBit(k,j,0);
+				int u1 = insertBit(k,j,1);
 				int tmp = walsh_coef[i][u0];
 				walsh_coef[i][u0] = tmp + walsh_coef[i][u1];
 				walsh_coef[i][u1] = tmp - walsh_coef[i][u1];
-			// }
-		}
-		x <<= 1;
+			}
+			
+		}	
 	}
 	for(int i = 0; i < deg; i++){
 		for(int j = 0; j < el_number; j++){
@@ -123,6 +116,10 @@ void Function::walsh(){
 
 }
 
+int Function::insertBit(int x,int pos,int i){
+	return ((x >> pos) << (pos+1)) | ((i & 1) << pos) | (x & ((1<<pos)-1));
+}
+
 // Counts error spread coefficients of functions
 void Function::errorCoef(){
 	cout<<"\n*** Error spread coefficient ***\n";
@@ -131,32 +128,37 @@ void Function::errorCoef(){
 	for(int i = 0;i < deg; i++){
 		err_coef[i] = 0;
 		for(int j = 0;j < el_number;j++){
-			int temp = field_elements[j]^x;
 			int tmp1, tmp2;
 			(vals[j] & x) != 0 ? tmp1 = 1 : tmp1 = 0;
-			(FuncField.gornerPow(temp,N) & x) != 0 ? tmp2 = 1 : tmp2 = 0;
+			(vals[j^x] & x) != 0 ? tmp2 = 1 : tmp2 = 0;
 			err_coef[i] += (tmp1 ^ tmp2);
 		}
-		cout<<"Error spread coefficient "<<i<<": "<<err_coef[i]<<"\n";
+		double bias;
+		bias = fabs(100*((double)err_coef[i]-16384)/16384);
+		cout<<"Error spread coefficient "<<i<<": "<<err_coef[i]<<" "<<bias<<"%\n";
 		x <<= 1;
 	}
 }
 
 // Counts avalanche effect of functions
 void Function::avalancheEffect(){
-	cout<<"\n*** Lav Effect ***\n";
+	cout<<"\n*** Avalanche Effect ***\n";
 	int k = 1 << (deg - 1);
-	int top = k + 350;
-	int bottom = k - 350;
 	int x = 0;
 	for(int i = 0;i < deg; i++){
-		if(err_coef[i] >= bottom && err_coef[i] <= top){
+		if(err_coef[i] == k){
 			cout<<"Function "<<i<<" has strict avalanche effect\n";
 			x++;
+		}
+		else{
+			cout<<"Function "<<i<<" has non strict avalanche effect\n";
 		}
 	}
 	if(x == deg){
 		cout<<"Function has strict zero-order avalanche effect\n";
+	}
+	else{
+		cout<<"Functions has't strict zero-order avalanche effect\n";
 	}
 }
 

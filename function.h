@@ -4,6 +4,7 @@
 #ifndef __FUNCTION_H__
 #define __FUNCTION_H__
 #include "field.h"
+#include <iomanip>
 #include <stdlib.h>
 
 class Function{
@@ -22,6 +23,7 @@ public:
 	void immunity();
 	int weight(int);
 	void algDegree();
+	int insertBit(int,int,int);
 protected:
 	int N, el_number, deg;
 	int *vals, *field_elements, *disbal, *err_coef, *non_lin, *imm;
